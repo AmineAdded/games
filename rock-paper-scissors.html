@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors - Amine Added</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+
+        .score {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            flex: 1;
+            transition: transform 0.3s;
+        }
+
+        .score:hover {
+            transform: scale(1.05);
+        }
+
+        .score-label {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .score-value {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .choice {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3em;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .choice:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .choice:active {
+            transform: scale(0.95);
+        }
+
+        .result {
+            min-height: 150px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .result-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .choices-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            font-size: 3em;
+            margin-top: 20px;
+        }
+
+        .vs {
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .reset-btn:active {
+            transform: translateY(0);
+        }
+
+        .win {
+            color: #4ade80;
+            animation: pulse 0.5s;
+        }
+
+        .lose {
+            color: #ff6b6b;
+            animation: pulse 0.5s;
+        }
+
+        .draw {
+            color: #fbbf24;
+            animation: pulse 0.5s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .footer {
+            margin-top: 30px;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            .choice {
+                width: 90px;
+                height: 90px;
+                font-size: 2.5em;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .choices-display {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🪨📄✂️ Rock Paper Scissors</h1>
+        <p class="subtitle">Challenge Amine Added!</p>
+        
+        <div class="score-board">
+            <div class="score">
+                <div class="score-label">You</div>
+                <div class="score-value" id="playerScore">0</div>
+            </div>
+            <div class="score">
+                <div class="score-label">Amine</div>
+                <div class="score-value" id="computerScore">0</div>
+            </div>
+        </div>
+
+        <div class="choices">
+            <div class="choice" data-choice="rock" title="Rock">🪨</div>
+            <div class="choice" data-choice="paper" title="Paper">📄</div>
+            <div class="choice" data-choice="scissors" title="Scissors">✂️</div>
+        </div>
+
+        <div class="result">
+            <div class="result-text" id="resultText">Choose your weapon!</div>
+            <div class="choices-display" id="choicesDisplay"></div>
+        </div>
+
+        <button class="reset-btn" onclick="resetGame()">Reset Game</button>
+
+        <div class="footer">
+            Made with ❤️ by Amine Added
+        </div>
+    </div>
+
+    <script>
+        let playerScore = 0;
+        let computerScore = 0;
+        const choices = ['rock', 'paper', 'scissors'];
+        const emojis = { rock: '🪨', paper: '📄', scissors: '✂️' };
+
+        document.querySelectorAll('.choice').forEach(choice => {
+            choice.addEventListener('click', function() {
+                const playerChoice = this.dataset.choice;
+                playGame(playerChoice);
+            });
+        });
+
+        function playGame(playerChoice) {
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            const result = determineWinner(playerChoice, computerChoice);
+            
+            updateScores(result);
+            displayResult(playerChoice, computerChoice, result);
+        }
+
+        function determineWinner(player, computer) {
+            if (player === computer) return 'draw';
+            
+            const winConditions = {
+                rock: 'scissors',
+                paper: 'rock',
+                scissors: 'paper'
+            };
+            
+            return winConditions[player] === computer ? 'win' : 'lose';
+        }
+
+        function updateScores(result) {
+            if (result === 'win') {
+                playerScore++;
+                document.getElementById('playerScore').textContent = playerScore;
+            } else if (result === 'lose') {
+                computerScore++;
+                document.getElementById('computerScore').textContent = computerScore;
+            }
+        }
+
+        function displayResult(playerChoice, computerChoice, result) {
+            const resultText = document.getElementById('resultText');
+            const choicesDisplay = document.getElementById('choicesDisplay');
+            
+            choicesDisplay.innerHTML = `
+                ${emojis[playerChoice]} 
+                <span class="vs">vs</span> 
+                ${emojis[computerChoice]}
+            `;
+            
+            resultText.className = 'result-text ' + result;
+            
+            if (result === 'win') {
+                resultText.textContent = '🎉 You Win!';
+            } else if (result === 'lose') {
+                resultText.textContent = '😢 You Lose!';
+            } else {
+                resultText.textContent = '🤝 Draw!';
+            }
+        }
+
+        function resetGame() {
+            playerScore = 0;
+            computerScore = 0;
+            document.getElementById('playerScore').textContent = '0';
+            document.getElementById('computerScore').textContent = '0';
+            document.getElementById('resultText').textContent = 'Choose your weapon!';
+            document.getElementById('resultText').className = 'result-text';
+            document.getElementById('choicesDisplay').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
